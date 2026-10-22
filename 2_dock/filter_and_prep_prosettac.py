@@ -47,34 +47,22 @@ def murcko_scaffold(smi: str) -> str:
         return smi
 
 
-def pick_diverse_top(df: pd.DataFrame, top: int, score_col: str) -> pd.DataFrame:
-    """Greedy scaffold-diverse selection: best score per unique linker scaffold first,
-    then fill remaining slots from the next-best unique scaffold, etc."""
-    df = df.sort_values(score_col, ascending=False).copy()
+def pick_one_per_scaffold(df: pd.DataFrame, top: int, score_col: str) -> pd.DataFrame:
+    """One best-scoring representative per unique linker Murcko scaffold.
+    Ranks scaffold groups by their best score, returns top N groups."""
+    df = df.copy()
     df['_linker_scaffold'] = df['Linker'].apply(murcko_scaffold)
 
-    selected = []
-    seen_scaffolds: dict = {}  # scaffold -> count
-    max_per_scaffold = max(1, top // 20)  # at most 5% of budget per scaffold
-
-    for _, row in df.iterrows():
-        if len(selected) >= top:
-            break
-        sc = row['_linker_scaffold']
-        if seen_scaffolds.get(sc, 0) < max_per_scaffold:
-            selected.append(row)
-            seen_scaffolds[sc] = seen_scaffolds.get(sc, 0) + 1
-
-    # Fill remaining slots if scaffold budget was too tight
-    if len(selected) < top:
-        used_idx = {id(r) for r in selected}
-        for _, row in df.iterrows():
-            if len(selected) >= top:
-                break
-            if id(row) not in used_idx:
-                selected.append(row)
-
-    return pd.DataFrame(selected).drop(columns=['_linker_scaffold'])
+    # Best molecule per scaffold
+    best_per_scaffold = (
+        df.sort_values(score_col, ascending=False)
+          .groupby('_linker_scaffold', sort=False)
+          .first()
+          .reset_index()
+          .sort_values(score_col, ascending=False)
+          .head(top)
+    )
+    return best_per_scaffold.drop(columns=['_linker_scaffold'])
 
 
 def main():
@@ -95,8 +83,8 @@ def main():
     print(f"After physicochemical + linker-length filters: {len(df)}")
 
     score_col = 'Score'
-    result = pick_diverse_top(df, args.top, score_col)
-    print(f"Selected {len(result)} scaffold-diverse candidates")
+    result = pick_one_per_scaffold(df, args.top, score_col)
+    print(f"Selected {len(result)} candidates (1 per linker scaffold)")
     print(f"  Score range: {result[score_col].min():.3f} – {result[score_col].max():.3f}")
     print(f"  MW range:    {result['MW 850-1150 (raw)'].min():.0f} – {result['MW 850-1150 (raw)'].max():.0f} Da")
     print(f"  Unique linker scaffolds: {result['Linker'].apply(murcko_scaffold).nunique()}")
