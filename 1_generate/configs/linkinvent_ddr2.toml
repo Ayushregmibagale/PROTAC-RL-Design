@@ -12,18 +12,17 @@
 
 run_type = "staged_learning"
 device = "cuda:0"
-tb_logdir = "outputs/tb_ddr2"
-json_out_config = "outputs/ddr2_run_config.json"
+tb_logdir = "/home/ayushregmibagale/PROTAC-RL-Design/outputs/tb_ddr2"
+json_out_config = "/home/ayushregmibagale/PROTAC-RL-Design/outputs/ddr2_run_config.json"
 
 [parameters]
 # Transformer prior (PubChem-trained, better generalisation than RNN prior)
-prior_file = "models/linkinvent_transformer_pubchem.prior"
-agent_file = "models/linkinvent_transformer_pubchem.prior"
-smiles_file = "inputs/ddr2_fragments.smi"   # 2 warheads per line separated by '|'
+prior_file = "/home/ayushregmibagale/PROTAC-RL-Design/models/linkinvent_transformer_pubchem.prior"
+agent_file = "/home/ayushregmibagale/PROTAC-RL-Design/models/linkinvent_transformer_pubchem.prior"
+smiles_file = "/home/ayushregmibagale/PROTAC-RL-Design/1_generate/inputs/ddr2_fragments.smi"
 
-summary_csv_prefix = "outputs/ddr2_rl"
+summary_csv_prefix = "/home/ayushregmibagale/PROTAC-RL-Design/outputs/ddr2_rl"
 batch_size = 64
-unique_sequences = true
 randomize_smiles = true
 
 [learning_strategy]
@@ -39,7 +38,7 @@ minsimilarity = 0.4
 
 # ── Single stage — run for up to 500 steps ────────────────────────────────────
 [[stage]]
-chkpt_file = "outputs/ddr2_stage1.chkpt"
+chkpt_file = "/home/ayushregmibagale/PROTAC-RL-Design/outputs/ddr2_stage1.chkpt"
 termination = "simple"
 max_score = 0.75
 min_steps = 50

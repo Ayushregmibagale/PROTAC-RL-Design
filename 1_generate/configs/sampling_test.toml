@@ -1,0 +1,10 @@
+run_type = "sampling"
+device = "cuda:0"
+
+[parameters]
+model_file = "/home/ayushregmibagale/PROTAC-RL-Design/models/linkinvent_transformer_pubchem.prior"
+smiles_file = "/home/ayushregmibagale/PROTAC-RL-Design/1_generate/inputs/ddr2_fragments.smi"
+output_file = "/home/ayushregmibagale/PROTAC-RL-Design/outputs/sampling_test.csv"
+num_smiles = 50
+unique_molecules = true
+randomize_smiles = true

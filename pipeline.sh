@@ -16,6 +16,8 @@ POI="DDR2"
 REINVENT_ENV="$HOME/.conda/envs/reinvent4/bin/python"
 DRMD_ENV="$HOME/.conda/envs/drMD/bin/python3"
 PROJECT="$HOME/PROTAC-RL-Design"
+# CUDA 13 runtime path required for RTX 5090 (sm_120, Blackwell)
+export LD_LIBRARY_PATH="$HOME/.conda/envs/reinvent4/lib/python3.11/site-packages/nvidia/cu13/lib:${LD_LIBRARY_PATH}"
 
 echo "=== Stage 1: REINVENT4 LinkINVENT ==="
 conda activate reinvent4 2>/dev/null || true
