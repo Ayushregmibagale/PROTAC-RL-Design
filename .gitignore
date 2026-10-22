@@ -1,0 +1,10 @@
+outputs/
+models/
+*.prior
+*.chkpt
+*.log
+*.json
+__pycache__/
+*.pyc
+.env
+tb_*/

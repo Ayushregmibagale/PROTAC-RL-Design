@@ -1,0 +1,17 @@
+name: reinvent4
+channels:
+  - defaults
+  - conda-forge
+dependencies:
+  - python=3.11
+  - pip
+  - pip:
+    - reinvent>=4.8
+    - torch>=2.12
+    - rdkit
+    - pandas
+    - numpy
+    - torch_geometric
+    - xgboost
+    - scikit-learn
+    - joblib

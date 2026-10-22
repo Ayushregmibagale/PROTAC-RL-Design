@@ -1,0 +1,11 @@
+# Link-INVENT input fragments for DDR2 PROTAC design
+# Format: warhead_smiles|vhl_smiles
+# [*] = linker attachment point on each fragment
+#
+# Fragments derived from SJF8240 (DDR2 rank2: 75.5% bridging, 100 ns MD)
+# Cut bonds: aryl-C(35)—O(36) [warhead|linker] and C(47)—N(49) [linker|VHL]
+# Existing linker: O-CCC-O-CCC-O-CCC=O (12 atoms, PEG-based)
+#
+# Warhead: Foretinib-based Type II DFG-out kinase inhibitor (36 heavy atoms)
+# VHL ligand: VH032-based (30 heavy atoms)
+[*]c1cc2nccc(Oc3ccc(N(C(=O)C4(C(N)=O)CC4)c4ccc(F)cc4)cc3F)c2cc1OC|[*]N[C@H](C(=O)N1C[C@H](O)C[C@H]1C(=O)NCc1ccc(-c2scnc2C)cc1)C(C)(C)C
